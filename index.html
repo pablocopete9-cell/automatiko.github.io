@@ -936,7 +936,7 @@ Exactamente 3 acciones. Formato obligatorio con línea en blanco entre cada una:
       const data = await response.json();
       console.log('Data:', JSON.stringify(data));
       console.log('Respuesta completa:', JSON.stringify(data));
-      const text = data.content || (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || data.text || data.result || data.diagnosis || '';
+      const text = data.diagnostico || data.content || (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '';
       console.log('Texto extraído:', text);
       const sections = text.split('---SECTION---').map(s => s.trim()).filter(Boolean);
       const score = calcScore();
