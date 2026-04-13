@@ -964,6 +964,42 @@ Exactamente 3 acciones concretas adaptadas a su sector y situación. Formato obl
       const segments = Array.from({length: 10}, (_, i) => `<div style="flex:1;height:8px;border-radius:4px;background:${i < score ? scoreColor : '#EDEAE3'};"></div>`).join('');
       const horasActual = answers['q_hours'] === 'menos de 5h' ? 4 : answers['q_hours'] === '5-15h' ? 10 : answers['q_hours'] === '15-30h' ? 22 : 35;
       const horasOptimizado = Math.round(horasActual * 0.25);
+      const resultHeaderHtml = `
+  <div style="background:var(--ink);border-radius:var(--radius);padding:40px;margin-bottom:24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px;margin-bottom:32px;">
+      <div>
+        <p style="font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:8px;">Diagnóstico · ${new Date().toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'})}</p>
+        <h2 style="font-family:Nunito,sans-serif;font-size:28px;font-weight:800;color:#fff;margin-bottom:4px;">${answers['q_sector'] || 'Tu empresa'}</h2>
+        <p style="font-size:15px;color:rgba(255,255,255,0.5);">Análisis generado por IA basado en tus respuestas</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:20px 28px;">
+        <div style="text-align:center;">
+          <div style="font-family:Nunito,sans-serif;font-size:52px;font-weight:800;color:#fff;line-height:1;">${score}</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px;">de 10</div>
+        </div>
+        <div style="width:1px;height:48px;background:rgba(255,255,255,0.1);"></div>
+        <div>
+          <div style="font-family:Nunito,sans-serif;font-size:18px;font-weight:800;color:${scoreColor};margin-bottom:4px;">${scoreLabel}</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.45);">Índice de madurez digital</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Sector</div>
+        <div style="font-size:14px;font-weight:500;color:#fff;">${answers['q_sector'] || '—'}</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Tamaño del equipo</div>
+        <div style="font-size:14px;font-weight:500;color:#fff;">${answers['q_size'] || '—'}</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:10px;padding:16px 20px;">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Horas repetitivas/semana</div>
+        <div style="font-size:14px;font-weight:500;color:#fff;">${answers['q_hours'] || '—'}</div>
+      </div>
+    </div>
+  </div>
+`;
       const chartsHtml = `
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
     <div class="result-section">
@@ -981,18 +1017,7 @@ Exactamente 3 acciones concretas adaptadas a su sector y situación. Formato obl
       const resultsEl = document.getElementById('diagResults');
       resultsEl.style.display = 'block';
       resultsEl.innerHTML = `
-        <div class="result-header">
-          <h2>Diagnóstico de ${answers['q_sector'] || 'tu empresa'}</h2>
-          <p>Análisis generado por IA · ${new Date().toLocaleDateString('es-ES', {day:'numeric',month:'long',year:'numeric'})}</p>
-          <div class="score-row">
-            <div class="score-circle"><div class="score-num">${score}</div><div class="score-max">/10</div></div>
-            <div style="flex:1;">
-              <div class="score-title" style="color:${scoreColor}">${scoreLabel}</div>
-              <div class="score-sub">Índice de madurez digital</div>
-              <div style="display:flex;gap:4px;">${segments}</div>
-            </div>
-          </div>
-        </div>
+        ${resultHeaderHtml}
         ${chartsHtml}
         <div class="result-section">
           <h3><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>Situación actual</h3>
