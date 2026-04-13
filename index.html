@@ -483,6 +483,10 @@
             <div class="check-pill" data-val="Ninguna en especial">Ninguna en especial</div>
           </div>
         </div>
+        <div class="question">
+          <span class="q-label">¿Cuántos clientes, pedidos o operaciones gestionáis aproximadamente al mes?</span>
+          <input type="text" id="q_volumen" placeholder="Ej: 200 pedidos, 50 clientes activos, 30 facturas..." />
+        </div>
         <div class="btn-row"><span></span><button class="btn-next" onclick="nextBlock(1)">Siguiente →</button></div>
       </div>
 
@@ -518,6 +522,10 @@
             <div class="opt" data-group="q_docs" data-val="Casi nada documentado"><div class="opt-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>Casi nada documentado</div>
             <div class="opt" data-group="q_docs" data-val="Todo de cabeza"><div class="opt-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></div>Todo va "de cabeza"</div>
           </div>
+        </div>
+        <div class="question">
+          <span class="q-label">Describe el proceso que más tiempo os quita en el día a día</span>
+          <textarea id="q_proceso_principal" placeholder="Ej: Introducir pedidos manualmente en el sistema, responder emails de clientes con las mismas preguntas, generar informes semanales en Excel..."></textarea>
         </div>
         <div class="btn-row"><button class="btn-back" onclick="prevBlock(2)">← Anterior</button><button class="btn-next" onclick="nextBlock(2)">Siguiente →</button></div>
       </div>
@@ -841,25 +849,33 @@ DATOS:
 - Experiencia IA: ${answers['q_prev_ai'] || 'No especificado'}
 - Apertura al cambio: ${answers['q_openness'] || 'No especificado'}
 - Freno principal: ${answers['q_barrier'] || 'No especificado'}
+- Volumen de operaciones al mes: ${answers['q_volumen'] || 'No especificado'}
+- Proceso que más tiempo consume: ${answers['q_proceso_principal'] || 'No especificado'}
+
+INSTRUCCIONES IMPORTANTES:
+- Usa SIEMPRE los datos concretos que te han dado. Si dicen que tienen 6-20 personas y usan Excel, menciona eso explícitamente.
+- Haz estimaciones numéricas concretas aunque sean aproximadas — horas ahorradas por semana, coste estimado del tiempo perdido, ROI aproximado. Indica que son estimaciones basadas en empresas similares.
+- PROHIBIDO usar frases vagas como "es posible que", "podría estar", "es incierto", "puede que". Sé directo y específico.
+- Adapta TODO al sector concreto que han indicado. Un e-commerce no tiene los mismos problemas que una clínica.
 
 SECCIÓN 1 - SITUACIÓN ACTUAL
-Escribe 2 párrafos bien redactados sobre el nivel de madurez digital. Primer párrafo: situación actual objetiva. Segundo párrafo: oportunidades. Mínimo 80 palabras. Frases completas con punto final.
+Escribe 2 párrafos usando los datos concretos recibidos. Primer párrafo: describe su situación actual mencionando explícitamente sus herramientas, tamaño y procesos. Segundo párrafo: oportunidades concretas con estimaciones numéricas. Mínimo 80 palabras. Sin frases vagas.
 
 SECCIÓN 2 - ÁREAS CRÍTICAS
-Exactamente 3 áreas. Formato obligatorio con línea en blanco entre cada una:
-1. [Título máx 5 palabras]: [2-3 frases con puntuación correcta explicando el problema e impacto.]
+Exactamente 3 áreas críticas basadas en sus respuestas reales. Formato obligatorio:
+1. [Título]: [2-3 frases concretas con impacto estimado en horas o euros.]
 
-2. [Título máx 5 palabras]: [2-3 frases con puntuación correcta explicando el problema e impacto.]
+2. [Título]: [2-3 frases concretas con impacto estimado en horas o euros.]
 
-3. [Título máx 5 palabras]: [2-3 frases con puntuación correcta explicando el problema e impacto.]
+3. [Título]: [2-3 frases concretas con impacto estimado en horas o euros.]
 
 SECCIÓN 3 - QUICK WINS
-Exactamente 3 acciones. Formato obligatorio con línea en blanco entre cada una:
-1. [Título máx 5 palabras]: [2-3 frases con puntuación correcta, acción concreta e impacto estimado en tiempo o coste.]
+Exactamente 3 acciones concretas adaptadas a su sector y situación. Formato obligatorio:
+1. [Título]: [2-3 frases con la acción concreta, cómo implementarla y estimación de ahorro en tiempo o dinero basada en empresas similares.]
 
-2. [Título máx 5 palabras]: [2-3 frases con puntuación correcta, acción concreta e impacto estimado en tiempo o coste.]
+2. [Título]: [2-3 frases con la acción concreta, cómo implementarla y estimación de ahorro en tiempo o dinero basada en empresas similares.]
 
-3. [Título máx 5 palabras]: [2-3 frases con puntuación correcta, acción concreta e impacto estimado en tiempo o coste.]`;
+3. [Título]: [2-3 frases con la acción concreta, cómo implementarla y estimación de ahorro en tiempo o dinero basada en empresas similares.]`;
   }
 
   function calcScore() {
