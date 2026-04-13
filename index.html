@@ -932,7 +932,9 @@ Exactamente 3 acciones. Formato obligatorio con línea en blanco entre cada una:
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: buildPrompt() })
       });
+      console.log('Status:', response.status);
       const data = await response.json();
+      console.log('Data:', JSON.stringify(data));
       const text = data.content || data.choices?.[0]?.message?.content || '';
       const sections = text.split('---SECTION---').map(s => s.trim()).filter(Boolean);
       const score = calcScore();
