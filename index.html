@@ -938,7 +938,9 @@ Exactamente 3 acciones. Formato obligatorio con línea en blanco entre cada una:
       console.log('Respuesta completa:', JSON.stringify(data));
       const text = data.diagnostico || data.content || (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '';
       console.log('Texto extraído:', text);
-      const sections = text.split('---SECTION---').map(s => s.trim()).filter(Boolean);
+      const cleanText = text.replace(/SECCIÓN \d+ - [^\n]+\n/g, '');
+      const sections = cleanText.split('---SECTION---').map(s => s.trim()).filter(Boolean);
+      console.log('Secciones:', sections.length, sections);
       const score = calcScore();
       const scoreLabel = score <= 3 ? 'Nivel inicial' : score <= 6 ? 'En desarrollo' : 'Nivel avanzado';
       const scoreColor = score <= 3 ? '#E24B4A' : score <= 6 ? '#EF9F27' : '#2EC76B';
